@@ -1,7 +1,7 @@
-#include "stdafx.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iostream>
+#include "stdafx.h"
 #include "Server.h"
 
 int Server::Run() {
@@ -24,7 +24,7 @@ int Server::Run() {
 
 	CreateThread(NULL, 0, this->ServerThreadSender, &serviceParams, 0, &threadID);
 
-	cout << "Messaging session started! Enter your messages below." << endl << endl;
+	cout << "Session started, enter your messages below" << endl << endl;
 
 	int byteCount = 0;
 	while (true) {
@@ -42,8 +42,7 @@ int Server::CreateServiceBinding(SOCKET serverSocket) {
 			throw ServerBindingException();
 		}
 		return 1;
-	}
-	catch (ServerBindingException& e) {
+	} catch (ServerBindingException& e) {
 		PrintException(e.what());
 		closesocket(serverSocket);
 		WSACleanup();
@@ -54,12 +53,10 @@ void Server::ListenForClient(SOCKET serverSocket) {
 	try {
 		if (listen(serverSocket, 1) == SOCKET_ERROR) {
 			throw ServerSocketListenException();
-		}
-		else {
+		} else {
 			cout << "Waiting for a client to connect..." << endl;
 		}
-	}
-	catch (ServerSocketListenException& e) {
+	} catch (ServerSocketListenException& e) {
 		PrintException(e.what());
 	}
 }
@@ -71,8 +68,7 @@ int Server::AcceptConnection(SOCKET socket) {
 			throw ServerAcceptConnectionException();
 		}
 		return acceptSocket;
-	}
-	catch (ServerAcceptConnectionException& e) {
+	} catch (ServerAcceptConnectionException& e) {
 		PrintException(e.what());
 		return -1;
 	}
@@ -92,26 +88,22 @@ DWORD WINAPI Server::ServerThreadSender(void* param) {
 				byteCount = send(socket, (char*)&server, sizeof(Server), 0);
 				if (byteCount == SOCKET_ERROR) {
 					throw ServerSendException();
-				}
-				else {
+				} else {
 					cin >> server.message;
 					if (server.message == server.QUIT) {
 						shouldRun = false;
 						exit(0);
 					};
 				}
-			}
-			else {
+			} else {
 				throw InvalidSocketException();
 			}
 		}
 		closesocket(socket);
 		return 0;
-	}
-	catch (InvalidSocketException& e) {
+	} catch (InvalidSocketException& e) {
 		PrintException(e.what());
-	}
-	catch (ServerSendException& e) {
+	} catch (ServerSendException& e) {
 		PrintException(e.what());
 		closesocket(socket);
 		return -1;

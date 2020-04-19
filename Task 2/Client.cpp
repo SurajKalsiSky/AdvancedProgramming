@@ -1,7 +1,7 @@
-#include "stdafx.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iostream>
+#include "stdafx.h"
 #include "Client.h"
 #include "Exceptions.h";
 
@@ -16,7 +16,7 @@ int Client::Run() {
 	this->Connect(clientSocket, clientService);
 
 	DWORD threadId;
-	cout << "Client is connecting to a host" << endl;
+	cout << "Client is connecting to a host..." << endl;
 	serviceParams.socket = (LPVOID)clientSocket;
 	serviceParams.instance = this;
 	serviceParams.size = sizeof(Client);
@@ -24,7 +24,7 @@ int Client::Run() {
 
 	CreateThread(NULL, 0, this->ClientThreadSender, &serviceParams, 0, &threadId);
 
-	cout << "Messaging session started! Enter your messages below." << endl << endl;
+	cout << "Session started, enter your messages below" << endl << endl;
 
 	int byteCount = 0;
 	while (true) {
@@ -41,8 +41,7 @@ int Client::Connect(SOCKET clientSocket, sockaddr_in clientService) {
 			throw ClientFailedToConnectException();
 		}
 		return 1;
-	}
-	catch (ClientFailedToConnectException& e) {
+	} catch (ClientFailedToConnectException& e) {
 		PrintException(e.what());
 		WSACleanup();
 		exit(0);
@@ -63,26 +62,22 @@ DWORD WINAPI Client::ClientThreadSender(void* param) {
 				byteCount = send(socket, (char*)&client, sizeof(Client), 0);
 				if (byteCount == SOCKET_ERROR) {
 					throw ClientSendException();
-				}
-				else {
+				} else {
 					cin >> client.message;
 					if (client.message == client.QUIT) {
 						shouldRun = false;
 						exit(0);
 					};
 				}
-			}
-			else {
+			} else {
 				throw InvalidSocketException();
 			}
 		}
 		closesocket(socket);
 		return 0;
-	}
-	catch (InvalidSocketException& e) {
+	} catch (InvalidSocketException& e) {
 		PrintException(e.what());
-	}
-	catch (ClientSendException& e) {
+	} catch (ClientSendException& e) {
 		PrintException(e.what());
 		closesocket(socket);
 		return -1;

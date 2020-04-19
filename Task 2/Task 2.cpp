@@ -1,22 +1,21 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "stdafx.h"
 #include <iostream>
+#include "stdafx.h"
 #include "pch.h"
 #include "Server.h"
 #include "Client.h"
 
-#define SERVER false
+#define SERVER false // set to true or false to create executables
 
 using namespace std;
 
 int main() {
-	cout << "Starting the C++ messaging app!" << endl;
-	cout << "Type 'QUIT' at any time to terminate the programs." << endl << endl;
+	cout << "Starting messaging app" << endl;
+	cout << "Type 'QUIT' at any time to terminate the programs" << endl << endl;
 	if (SERVER) {
 		Server server;
 		server.Run();
-	}
-	else {
+	} else {
 		Client client;
 		client.Run();
 	}

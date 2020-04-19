@@ -1,26 +1,23 @@
-#include "stdafx.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iostream>
+#include "stdafx.h"
 #include "Comms.h";
 #include "Exceptions.h";
 
 int Comms::SetupWinsock() {
 	try {
 		WSADATA wsaData;
-		int wsaerr;
 		WORD wVersionRequested = MAKEWORD(2, 2);
-		wsaerr = WSAStartup(wVersionRequested, &wsaData);
+		int wsaerr = WSAStartup(wVersionRequested, &wsaData);
 		if (wsaerr != 0) {
-			throw DLLNotFoundException();
+			throw ExceptionDLLNotFound();
 		}
 		else {
-			cout << "The Winsock dll found!" << endl;
-			cout << "Winsock status: " << wsaData.szSystemStatus << endl;
+			cout << "Found Winsock, status: " << wsaData.szSystemStatus << endl;
 			return 1;
 		};
-	}
-	catch (DLLNotFoundException& e) {
+	} catch (ExceptionDLLNotFound& e) {
 		PrintException(e.what());
 	}
 };
@@ -33,13 +30,11 @@ int Comms::SetupSocket() {
 			int errorCode = WSAGetLastError();
 			throw InvalidSocketException();
 			WSACleanup();
-		}
-		else {
+		} else {
 			cout << "socket() is OK!" << endl;
 			return instanceSocket;
 		}
-	}
-	catch (InvalidSocketException& e) {
+	} catch (InvalidSocketException& e) {
 		PrintException(e.what());
 	}
 }
