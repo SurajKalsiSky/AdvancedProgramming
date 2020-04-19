@@ -20,6 +20,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gameComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drawableGameComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="game.h">
       <Filter>Source Files</Filter>
     </ClInclude>

@@ -1,2 +1,6 @@
 ﻿  Task 1.cpp
+S:\Programs\Code\Repos\AdvancedProgramming\Task 1\Task 1.cpp(13,18): warning C5043: 'terminate': exception specification does not match previous declaration
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_terminate.h(29): message : see declaration of 'terminate'
+S:\Programs\Code\Repos\AdvancedProgramming\Task 1\Task 1.cpp(13,18): warning C4273: 'terminate': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_terminate.h(29,48): message : see previous definition of 'terminate'
   Task 1.vcxproj -> S:\Programs\Code\Repos\AdvancedProgramming\Task 1\Debug\Task 1.exe
