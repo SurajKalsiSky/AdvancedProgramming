@@ -1,0 +1,2 @@
+S:\Programs\Code\Repos\AdvancedProgramming\Task 2\Debug\Task 2.exe
+S:\Programs\Code\Repos\AdvancedProgramming\Task 2\Debug\Task 2.pdb
